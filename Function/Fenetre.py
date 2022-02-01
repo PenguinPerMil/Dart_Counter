@@ -26,6 +26,8 @@ from tkinter import *
 import tkinter as tk
 import math
 
+from .ImageLabel import *
+
 Current_player_string="default"
 actif_player=-1
 Score_table=[]
@@ -59,13 +61,13 @@ def Generate_Main_Window(table_of_player_name, nb_player=2):
         
         if Score_table[actif_player]<0:
             Score_table[actif_player]=Score_table[actif_player]+Score_calc
-            Commentaire.delete("1.0",END)
-            Commentaire.insert(INSERT,"BUUUUURNNN !!!")
+            Commentaire.load("./data/gif/burn.gif")
+
         elif Score_table[actif_player]==0:
-            Commentaire.delete("1.0",END)
-            Commentaire.insert(INSERT,"Victory !!! " + table_of_player_name[actif_player].get())
+            Commentaire.load("./data/gif/victory.gif")
+            Commentaire_text.insert(INSERT,"Victory !!! " + table_of_player_name[actif_player].get())
         else:
-            Commentaire.delete("1.0",END)
+            Commentaire.unload()
 
         Score_1_value.set("0")
         Score_2_value.set("0")
@@ -112,9 +114,11 @@ def Generate_Main_Window(table_of_player_name, nb_player=2):
     Score_2_Entry.grid(row=nb_player+2,column=3)
     Score_3_Entry.grid(row=nb_player+2,column=4)
 
-    Commentaire=tk.Text(main_window,width=50,height=3)
-    Commentaire.grid(row = nb_player+4,column=1)
+    Commentaire=ImageLabel(main_window)
+    Commentaire.grid(row=nb_player+3,column=1)
 
+    Commentaire_text=tk.Text(main_window,width=20,height=1)
+    Commentaire_text.grid(row=nb_player+4,column=1)
     main_window.mainloop()    
 
 def Generate_Nb_Player_Window():
@@ -188,3 +192,5 @@ def Generate_Name_player_window(nb_player=2):
     main_window.mainloop()
     
     return table_of_player_name   
+
+ 
