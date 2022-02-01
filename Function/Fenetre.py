@@ -26,13 +26,12 @@ from tkinter import *
 import tkinter as tk
 import math
 
-table_of_player_name=[]
 Current_player_string="default"
 actif_player=-1
 Score_table=[]
 Score_Text=[]
 
-def Generate_Main_Window(nb_player=2):
+def Generate_Main_Window(table_of_player_name, nb_player=2):
 
     global actif_player
 
@@ -42,7 +41,7 @@ def Generate_Main_Window(nb_player=2):
     #Generation of the main window
     main_window = tk.Tk()
     main_window.geometry("720x480")
-    main_window.title("Compteur pour fléchettes")
+    main_window.title("Dart counter")
     e=[]
     label=[]
     Score_1_value=StringVar()
@@ -81,10 +80,9 @@ def Generate_Main_Window(nb_player=2):
         Current_player_display.insert(INSERT,Current_player_string)
 
     for i in range(0,nb_player):
-        table_of_player_name.append(StringVar())
-        label.append(tk.Label(main_window, text='Joueur ' + str(i)))
+        label.append(tk.Label(main_window, text='Player ' + str(i)))
         label[i].grid(row=i)
-        e.append(tk.Entry(main_window,textvariable=table_of_player_name[i]))
+        e.append(tk.Label(main_window,text=table_of_player_name[i].get()))
         e[i].grid(row=i,column=1)
         Score_Text.append(tk.Text(main_window,width=20,height=1))
         Score_Text[i].grid(row=i,column=3)
@@ -94,7 +92,7 @@ def Generate_Main_Window(nb_player=2):
     Calcul_button=tk.Button(main_window,text='Calcul',command=Update_Score)
     Calcul_button.grid(row=nb_player+3,column=3)
     
-    Current_player_label=tk.Label(main_window,text='Joueur courant:')
+    Current_player_label=tk.Label(main_window,text='Actual Player :')
     Current_player_label.grid(row=nb_player+2,column=0)
     
     Current_player_display=tk.Text(main_window,width=20,height=1)
@@ -127,8 +125,12 @@ def Generate_Nb_Player_Window():
     Nb_player_window.title("How many player ?")
     
     def close_window():
-        Nb_player_window.destroy()
-    
+        if nb_player_value.get()!="":
+            Nb_player_window.destroy()
+        else:    
+            Error_text.delete(0.01,END)
+            Error_text.insert(INSERT,"ERROR : Please insert number of player")
+            
     nb_player_value=StringVar()
     
     Label_nb=tk.Label(Nb_player_window,text='Number of player :')
@@ -140,6 +142,49 @@ def Generate_Nb_Player_Window():
     Confirm_button=tk.Button(Nb_player_window,text="Confirm",command=close_window)
     Confirm_button.grid(row=0,column=2)
     
+    Error_text=tk.Text(Nb_player_window,width=40,height=1,fg='red',bg='yellow')
+    Error_text.grid(row=2,column=2)
+    
     Nb_player_window.mainloop()
     
     return int(nb_player_value.get())
+
+def Generate_Name_player_window(nb_player=2):
+    
+    table_of_player_name=[]
+    
+    main_window=tk.Tk()
+    main_window.geometry("720x480")
+    main_window.title("Name of the players")
+    
+    
+    def Close_window_name():
+        
+        All_complete=True
+        for i in range(0,nb_player):
+            All_complete=All_complete and (table_of_player_name[i].get()!="")
+            
+        if All_complete:
+            main_window.destroy()
+        else:
+            Error_text.delete(0.01,END)
+            Error_text.insert(INSERT,"ERROR : Please insert name in every player")
+    
+    e=[]
+    label=[]
+
+    for i in range(0,nb_player):
+        table_of_player_name.append(StringVar())
+        label.append(tk.Label(main_window, text='Player ' + str(i)))
+        label[i].grid(row=i)
+        e.append(tk.Entry(main_window,textvariable=table_of_player_name[i]))
+        e[i].grid(row=i,column=1)
+        
+    Clear_button=tk.Button(main_window,text='Confirmate',command=Close_window_name)
+    Clear_button.grid(row=math.floor(nb_player/2),column=3) 
+    
+    Error_text=tk.Text(main_window,width=40,height=1,fg='red',bg='yellow')
+    Error_text.grid(row=math.floor(nb_player/2),column=2)
+    main_window.mainloop()
+    
+    return table_of_player_name   
