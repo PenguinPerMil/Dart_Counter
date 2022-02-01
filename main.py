@@ -25,6 +25,8 @@
 
 from Function import Fenetre
 
-nb_players=int(input('Nombre de joueurs :'))
+nb_players=Fenetre.Generate_Nb_Player_Window()
+
 #nb_players=4
-Fenetre.Generate_Window(nb_players)
+
+Fenetre.Generate_Main_Window(nb_players)

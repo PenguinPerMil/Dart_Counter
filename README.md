@@ -18,7 +18,7 @@ Penguin_Per_Mil
      \           ;  ;           /       
       :         :    :         :        
       :         :.__.:         :        
-       \       /"-..-"\       /    fsc  
+       \       /"-..-"\       /     
         '-.__.'        '.__.-'  
 
 # Dart_Counter
@@ -31,10 +31,11 @@ python3
 
 tkinter  
 
-** Windows **
+**Windows**
+
 ``` python3 pip install tkinter ```
 
-** Ubuntu **
+**Ubuntu**
 
 ``` sudo apt install python3-tkinter ```
 

@@ -21,6 +21,7 @@
 #       \       /"-..-"\       /     
 #        '-.__.'        '.__.-'  
 
+from distutils import command
 from tkinter import *
 import tkinter as tk
 import math
@@ -30,7 +31,8 @@ Current_player_string="default"
 actif_player=-1
 Score_table=[]
 Score_Text=[]
-def Generate_Window(nb_player=2):
+
+def Generate_Main_Window(nb_player=2):
 
     global actif_player
 
@@ -117,3 +119,27 @@ def Generate_Window(nb_player=2):
 
     main_window.mainloop()    
 
+def Generate_Nb_Player_Window():
+    
+    #Generation of the main window
+    Nb_player_window = tk.Tk()
+    Nb_player_window.geometry("720x480")
+    Nb_player_window.title("How many player ?")
+    
+    def close_window():
+        Nb_player_window.destroy()
+    
+    nb_player_value=StringVar()
+    
+    Label_nb=tk.Label(Nb_player_window,text='Number of player :')
+    Label_nb.grid(row=0,column=1)
+
+    Entry_nb=tk.Entry(Nb_player_window,textvariable=nb_player_value)
+    Entry_nb.grid(row=0,column=1)
+    
+    Confirm_button=tk.Button(Nb_player_window,text="Confirm",command=close_window)
+    Confirm_button.grid(row=0,column=2)
+    
+    Nb_player_window.mainloop()
+    
+    return int(nb_player_value.get())
